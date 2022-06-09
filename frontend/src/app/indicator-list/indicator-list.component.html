@@ -1,0 +1,110 @@
+<div class="panel panel-primary">
+
+    <!--- panel search --->
+    <div [hidden]="submitted" style="width: 400px;">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Country*: </label>
+            <input type="text" class="form-control" id="codeCountry" required [(ngModel)]="indicatorSearch.country.id" name="codeCountry" placeholder="Ex: BR">
+        </div>
+        <div class="form-group">
+            <label for="name">Indicator: </label>
+            <input type="text" class="form-control" id="indicatorCode" [(ngModel)]="indicatorSearch.indicator.id" name="indicatorCode" placeholder="SI.POV.DDAY">
+        </div>    
+
+        <button type="submit" class="btn btn-success">Search</button>
+        
+    </form>
+    </div>
+
+    <!-- panel result -->
+    <div [hidden]="!submitted">
+        <button (click)="ngOnInit()" class="btn btn-primary">New search</button><br>
+        
+        <div class="panel-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Iso Code</th>
+                  <th>Country</th>
+                  <th>Date</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let indicator of indicators">
+                  <td>{{indicator.country.id}}</td>
+                  <td>{{indicator.countryiso3code}}</td>
+                  <td>{{indicator.country.value}}</td>
+                  <td>{{indicator.date}}</td>
+                  <td><button (click)="openModal(indicator)" class="btn btn-info" style="margin-left: 10px">Details</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+    </div>
+
+    <!-- MODAL -->
+    <div
+        class="modal"
+        tabindex="-1"
+        role="dialog"
+        [ngStyle]="{'display':displayStyle}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Details of Indicator</h4>
+            </div>
+            <div class="modal-body">
+                <form >
+                    <div class="form-group">
+                        <label for="indicator-id">Indicator: </label>
+                        <input type="text" class="form-control" id="indicator-id" disabled [(ngModel)]="indicatorSelected.indicator.id" name="indicator-id">
+                        <input type="text" class="form-control" id="indicator-value" disabled [(ngModel)]="indicatorSelected.indicator.value" name="indicator-value">
+                    </div>
+                    <div class="form-group">
+                        <label for="country-id">Country: </label>
+                        <input type="text" class="form-control" id="country-id" disabled [(ngModel)]="indicatorSelected.country.id" name="country-id">
+                        <input type="text" class="form-control" id="country-value" disabled [(ngModel)]="indicatorSelected.country.value" name="country-value">
+                    </div>
+                    <div class="form-group">
+                        <label for="countryiso3code">Country ISO code: </label>
+                        <input type="text" class="form-control" id="countryiso3code" disabled [(ngModel)]="indicatorSelected.countryiso3code" name="countryiso3code">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date: </label>
+                        <input type="text" class="form-control" id="date" disabled [(ngModel)]="indicatorSelected.date" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="value">Value: </label>
+                        <input type="text" class="form-control" id="value" disabled [(ngModel)]="indicatorSelected.value" name="value">
+                    </div>
+                    <div class="form-group">
+                        <label for="value">Unit: </label>
+                        <input type="text" class="form-control" id="unit" disabled [(ngModel)]="indicatorSelected.unit" name="unit">
+                    </div>
+                    <div class="form-group">
+                        <label for="value">Obs. Status: </label>
+                        <input type="text" class="form-control" id="obs_status" disabled [(ngModel)]="indicatorSelected.obs_status" name="obs_status">
+                    </div>
+                    <div class="form-group">
+                        <label for="value">Decimal: </label>
+                        <input type="text" class="form-control" id="decimal" disabled [(ngModel)]="indicatorSelected.decimal" name="decimal">
+                    </div>
+                </form>
+
+        
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" 
+                        (click)="closePopup()">
+                Close
+                </button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
